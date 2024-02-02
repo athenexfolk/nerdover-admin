@@ -1,0 +1,58 @@
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+  <div class="h-36 relative p-2">
+    <button
+      (click)="fileInput.click()"
+      class="w-full h-full rounded-xl border-2 border-dashed flex justify-center items-center text-zinc-500 hover:text-zinc-700"
+    >
+      <span class="material-symbols-rounded"> add_photo_alternate </span>
+    </button>
+  </div>
+  <div *ngFor="let image of images" class="h-36 relative">
+    <img
+      [src]="'/upload/' + image.path"
+      class="w-full h-full object-cover object-center"
+    />
+    <div
+      class="absolute top-0 left-0 w-full h-full opacity-0 hover:opacity-100 bg-black/0 hover:bg-black/50 text-white flex justify-center items-center"
+    >
+      <button
+        (click)="openImagePanel(image)"
+        class="flex justify-center items-center rounded-full p-2 hover:bg-white/50"
+      >
+        <span class="material-symbols-rounded"> zoom_out_map </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<input
+  type="file"
+  accept="image/*"
+  (input)="onFileInput($event)"
+  class="hidden"
+  #fileInput
+/>
+
+<ng-container *ngIf="isImagePanelOpen && currentFocus">
+  <app-overlay>
+    <div class="w-full h-full relative rounded-xl overflow-hidden">
+      <img
+        [src]="'/upload/' + currentFocus.path"
+        class="w-full h-full object-contain object-center bg-white/75 backdrop-blur-sm"
+      />
+      <div class="absolute top-4 right-4 flex items-center gap-4">
+        <button (click)="copyPath()"
+          class="flex justify-center items-center p-2 rounded-full hover:bg-zinc-100"
+        >
+          <span class="material-symbols-rounded"> content_copy </span>
+        </button>
+        <button
+          (click)="closeImagePanel()"
+          class="flex justify-center items-center p-2 rounded-full text-red-600 hover:bg-red-100"
+        >
+          <span class="material-symbols-rounded"> close </span>
+        </button>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container>

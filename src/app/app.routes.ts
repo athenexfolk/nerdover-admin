@@ -20,4 +20,11 @@ export const routes: Routes = [
         (m) => m.LessonRoutingModule
       ),
   },
+  {
+    path: 'images',
+    loadChildren: () =>
+      import('./features/image/image-routing.module').then(
+        (m) => m.ImageRoutingModule
+      ),
+  },
 ];
