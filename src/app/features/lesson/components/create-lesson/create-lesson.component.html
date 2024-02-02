@@ -1,0 +1,104 @@
+<app-overlay>
+  <div
+    class="p-4 bg-white rounded-xl relative max-w-sm w-full flex flex-col gap-4"
+  >
+    <h3 class="text-xl font-bold">สร้างบทเรียน</h3>
+    <form [formGroup]="form">
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <input
+            type="text"
+            formControlName="lessonKey"
+            class="px-4 py-2 rounded-lg border w-full"
+            placeholder="คีย์บทเรียน (ต้องระบุ)"
+          />
+          <div
+            *ngIf="lessonKey.invalid && (lessonKey.dirty || lessonKey.touched)"
+            class="text-red-500 text-sm"
+          >
+            <div *ngIf="lessonKey.hasError('required')">
+              {{ requiredKeyInvalidText }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <input
+            type="text"
+            formControlName="lessonName"
+            class="px-4 py-2 rounded-lg border w-full"
+            placeholder="ชื่อบทเรียน (ต้องระบุ)"
+          />
+          <div
+            *ngIf="
+              lessonName.invalid && (lessonName.dirty || lessonName.touched)
+            "
+            class="text-red-500 text-sm"
+          >
+            <div *ngIf="lessonName.hasError('required')">
+              {{ requiredNameInvalidText }}
+            </div>
+          </div>
+        </div>
+        <select formControlName="lessonParentKey" class="border rounded-lg px-4 py-2 appearance-none">
+          <option [ngValue]="null" disabled>เลือกหมวดหมู่</option>
+          <option
+            *ngFor="let category of availableCategories"
+            [ngValue]="category.key"
+          >
+            {{ category.label }}
+          </option>
+        </select>
+        <input
+          type="file"
+          accept="image/*"
+          (input)="onFileInput($event)"
+          class="hidden"
+          #coverFileInput
+        />
+        <button
+          *ngIf="!coverFile; else coverImage"
+          (click)="coverFileInput.click()"
+          class="px-4 py-2 rounded-lg border-2 border-dashed font-semibold h-36 text-zinc-400 hover:text-zinc-500 flex gap-4 justify-center items-center"
+        >
+          <span class="material-symbols-rounded"> add_a_photo </span>
+          เพิ่มภาพปก
+        </button>
+      </div>
+    </form>
+    <div class="flex justify-end gap-4">
+      <button (click)="closePanel()" class="px-4 py-2 rounded-lg font-semibold">
+        ยกเลิก
+      </button>
+      <button
+        (click)="create()"
+        [disabled]="form.invalid"
+        class="px-4 py-2 rounded-lg font-semibold bg-green-600 text-white hover:bg-green-700 disabled:bg-zinc-300"
+      >
+        สร้าง
+      </button>
+    </div>
+  </div>
+</app-overlay>
+
+<ng-template #coverImage>
+  <div class="h-36 rounded-lg overflow-hidden border relative">
+    <img
+      [src]="coverFileSrc"
+      class="w-full h-full object-cover object-center"
+    />
+    <div class="absolute bottom-2 right-2 flex gap-4 items-center">
+      <button
+        (click)="coverFileInput.click()"
+        class="p-2 rounded-full flex items-center text-yellow-600 bg-yellow-50 hover:bg-yellow-100 shadow"
+      >
+        <span class="material-symbols-rounded"> change_circle </span>
+      </button>
+      <button
+        (click)="clearCoverFile()"
+        class="p-2 rounded-full flex items-center text-red-600 bg-red-50 hover:bg-red-100 shadow"
+      >
+        <span class="material-symbols-rounded"> delete </span>
+      </button>
+    </div>
+  </div>
+</ng-template>

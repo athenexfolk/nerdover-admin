@@ -1,0 +1,77 @@
+<div>
+  <div class="flex justify-end gap-4 p-4">
+    <button
+      (click)="openCreatePanel()"
+      class="px-4 py-2 rounded-xl font-semibold bg-green-700 hover:bg-green-800 text-white flex items-center"
+    >
+      สร้างหมวดหมู่
+    </button>
+  </div>
+  <div>
+    <div class="flex gap-4 p-4 sticky top-0 bg-white/90 backdrop-blur">
+      <div
+        class="grow grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center font-semibold"
+      >
+        <span class="hidden md:block">คีย์</span>
+        <span class="hidden lg:block">ภาพปก</span>
+        <span class="col-span-2">ชื่อ</span>
+      </div>
+      <div class="w-40"></div>
+    </div>
+    <ng-container *ngFor="let category of categories">
+      <div class="flex gap-4 p-4 hover:bg-zinc-50">
+        <div class="grow grid md:grid-cols-3 lg:grid-cols-4 gap-4 items-center">
+          <span class="hidden md:block">{{ category.key }}</span>
+          <img
+            [src]="'/upload/' + category.cover"
+            class="size-20 object-cover hidden lg:block"
+          />
+          <span class="col-span-2">{{ category.label }}</span>
+        </div>
+        <div class="w-40 shrink-0 flex gap-4 justify-between items-center">
+          <button
+            (click)="openUpdatePanel(category)"
+            class="flex justify-center items-center p-2 rounded-full text-yellow-600 hover:bg-yellow-50"
+          >
+            <span class="material-symbols-rounded"> edit </span>
+          </button>
+          <button
+            (click)="openDeletePanel(category)"
+            class="flex justify-center items-center p-2 rounded-full text-red-600 hover:bg-red-50"
+          >
+            <span class="material-symbols-rounded"> delete </span>
+          </button>
+          <button
+            (click)="openInfoPanel(category)"
+            class="flex justify-center items-center p-2 rounded-full text-blue-600 hover:bg-blue-50"
+          >
+            <span class="material-symbols-rounded"> info </span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<app-create-category
+  *ngIf="isCreatePanelOpen"
+  (close)="closeCreatePanel()"
+></app-create-category>
+
+<app-update-category
+  *ngIf="isUpdatePanelOpen && currentFocus"
+  [category]="currentFocus"
+  (close)="closeUpdatePanel()"
+></app-update-category>
+
+<app-delete-category
+  *ngIf="isDeletePanelOpen && currentFocus"
+  [category]="currentFocus"
+  (close)="closeDeletePanel()"
+></app-delete-category>
+
+<app-category-info
+  *ngIf="isInfoPanelOpen && currentFocus"
+  [category]="currentFocus"
+  (close)="closeInfoPanel()"
+></app-category-info>

@@ -1,0 +1,87 @@
+<div>
+  <div class="flex justify-end gap-4 p-4">
+    <button
+      (click)="openCreatePanel()"
+      class="px-4 py-2 rounded-xl font-semibold bg-green-700 hover:bg-green-800 text-white flex items-center"
+    >
+      เพิ่มบทเรียน
+    </button>
+  </div>
+  <div>
+    <div class="flex gap-4 p-4 sticky top-0 bg-white/90 backdrop-blur">
+      <div
+        class="grow grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center font-semibold"
+      >
+        <span class="hidden md:block">คีย์</span>
+        <span class="hidden lg:block">ภาพปก</span>
+        <span class="col-span-2">ชื่อ</span>
+      </div>
+      <div class="w-40"></div>
+    </div>
+    <ng-container *ngFor="let lwc of lessonsWithCategory">
+      <div class="flex gap-4 p-4 hover:bg-zinc-50">
+        <div
+          class="grow grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center"
+        >
+          <span class="hidden md:block">{{ lwc.lesson.key }}</span>
+          <img
+            [src]="'/upload/' + lwc.lesson.cover"
+            class="size-20 object-cover hidden lg:block"
+          />
+          <div class="col-span-2">
+            <div>{{ lwc.lesson.label }}</div>
+            <span *ngIf="lwc.category" class="text-xs"
+              >ในหมวดหมู่
+              <span class="font-semibold">{{ lwc.category.label }}</span></span
+            >
+          </div>
+        </div>
+        <div class="w-40 shrink-0 flex gap-4 justify-between items-center">
+          <button
+            (click)="openUpdatePanel(lwc.lesson)"
+            class="flex justify-center items-center p-2 rounded-full text-yellow-600 hover:bg-yellow-50"
+          >
+            <span class="material-symbols-rounded"> edit </span>
+          </button>
+          <button
+            (click)="openDeletePanel(lwc.lesson)"
+            class="flex justify-center items-center p-2 rounded-full text-red-600 hover:bg-red-50"
+          >
+            <span class="material-symbols-rounded"> delete </span>
+          </button>
+          <button
+            (click)="openInfoPanel(lwc.lesson)"
+            class="flex justify-center items-center p-2 rounded-full text-blue-600 hover:bg-blue-50"
+          >
+            <span class="material-symbols-rounded"> info </span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<app-create-lesson
+  *ngIf="isCreatePanelOpen"
+  [availableCategories]="categories"
+  (close)="closeCreatePanel()"
+></app-create-lesson>
+
+<app-update-lesson
+  *ngIf="isUpdatePanelOpen && currentFocus"
+  [availableCategories]="categories"
+  [lesson]="currentFocus"
+  (close)="closeUpdatePanel()"
+></app-update-lesson>
+
+<app-delete-lesson
+  *ngIf="isDeletePanelOpen && currentFocus"
+  [lesson]="currentFocus"
+  (close)="closeDeletePanel()"
+></app-delete-lesson>
+
+<app-lesson-info
+  *ngIf="isInfoPanelOpen && currentFocus"
+  [lesson]="currentFocus"
+  (close)="closeInfoPanel()"
+></app-lesson-info>

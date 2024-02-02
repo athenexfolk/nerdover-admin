@@ -1,0 +1,7 @@
+<div
+  *ngIf="content"
+  class="max-w-screen-md w-full mx-auto p-4 prose prose-zinc"
+>
+  <h1>{{ content.label }}</h1>
+  <markdown [data]="content.content" class="prose prose-zinc" katex></markdown>
+</div>

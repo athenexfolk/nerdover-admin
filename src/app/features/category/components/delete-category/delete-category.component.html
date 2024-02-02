@@ -1,0 +1,19 @@
+<app-overlay>
+  <div
+    class="p-4 bg-white rounded-xl relative max-w-sm w-full flex flex-col gap-4"
+  >
+    <h3 class="text-xl font-bold">ลบหมวดหมู่</h3>
+    <div>ยืนยันที่จะลบหมวดหมู่ {{ category.label }} หรือไม่</div>
+    <div class="flex justify-end gap-4">
+      <button (click)="closePanel()" class="px-4 py-2 rounded-lg font-semibold">
+        ยกเลิก
+      </button>
+      <button
+        (click)="delete()"
+        class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700"
+      >
+        ลบ
+      </button>
+    </div>
+  </div>
+</app-overlay>

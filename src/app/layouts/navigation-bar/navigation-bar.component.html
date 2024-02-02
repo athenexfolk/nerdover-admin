@@ -1,0 +1,42 @@
+<div class="w-[300px] h-screen bg-zinc-50 p-4 flex flex-col gap-8">
+  <div>
+    <h1 class="text-xl font-bold">เนิร์ดโอเวอร์ | แอดมิน</h1>
+  </div>
+  <div>
+    <nav class="flex flex-col gap-1">
+      <button
+        [routerLink]="['/']"
+        [routerLinkActive]="'bg-zinc-200'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+      >
+        <span class="material-symbols-rounded"> dashboard </span>
+        แดชบอร์ด
+      </button>
+      <button
+        [routerLink]="['/', 'categories']"
+        [routerLinkActive]="'bg-zinc-200'"
+        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+      >
+        <span class="material-symbols-rounded"> category </span>
+        หมวดหมู่
+      </button>
+      <button
+        [routerLink]="['/', 'lessons']"
+        [routerLinkActive]="'bg-zinc-200'"
+        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+      >
+        <span class="material-symbols-rounded"> article </span>
+        บทเรียน
+      </button>
+      <button
+        [routerLink]="['/', 'images']"
+        [routerLinkActive]="'bg-zinc-200'"
+        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+      >
+        <span class="material-symbols-rounded"> photo </span>
+        รูปภาพ
+      </button>
+    </nav>
+  </div>
+</div>
