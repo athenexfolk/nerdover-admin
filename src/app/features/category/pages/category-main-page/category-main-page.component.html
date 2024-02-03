@@ -23,7 +23,11 @@
         <div class="grow grid md:grid-cols-3 lg:grid-cols-4 gap-4 items-center">
           <span class="hidden md:block">{{ category.key }}</span>
           <img
-            [src]="'/upload/' + category.cover"
+            [src]="
+              category.cover
+                ? '/upload/' + category.cover
+                : 'assets/default.png'
+            "
             class="size-20 object-cover hidden lg:block"
           />
           <span class="col-span-2">{{ category.label }}</span>

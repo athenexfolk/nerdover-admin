@@ -1,42 +1,88 @@
-<div class="w-[300px] h-screen bg-zinc-50 p-4 flex flex-col gap-8">
-  <div>
-    <h1 class="text-xl font-bold">เนิร์ดโอเวอร์ | แอดมิน</h1>
+<div
+  class="h-screen bg-zinc-50 p-4 flex flex-col gap-8 min-w-[72px] max-w-[300px] transition-all duration-300"
+  [ngClass]="isNavExpanded ? 'w-[300px]' : 'w-[72px]'"
+>
+  <div class="flex items-center gap-2 whitespace-nowrap">
+    <img src="assets/nov.svg" class="size-10" />
+    <h1
+      class="text-xl font-bold transition-all duration-300"
+      [ngClass]="isNavExpanded ? 'visible opacity-100' : 'invisible opacity-0'"
+    >
+      เนิร์ดโอเวอร์ | แอดมิน
+    </h1>
   </div>
   <div>
-    <nav class="flex flex-col gap-1">
+    <nav class="flex flex-col gap-2">
       <button
         [routerLink]="['/']"
         [routerLinkActive]="'bg-zinc-200'"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+        class="py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4 whitespace-nowrap transition-all duration-300"
+        [ngClass]="[isNavExpanded ? 'px-4' : 'px-2']"
       >
         <span class="material-symbols-rounded"> dashboard </span>
-        แดชบอร์ด
+        <span
+          class="transition-all duration-300"
+          [ngClass]="
+            isNavExpanded ? 'visible opacity-100' : 'invisible opacity-0'
+          "
+          >แดชบอร์ด</span
+        >
       </button>
       <button
         [routerLink]="['/', 'categories']"
         [routerLinkActive]="'bg-zinc-200'"
-        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+        class="py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4 whitespace-nowrap transition-all duration-300"
+        [ngClass]="[isNavExpanded ? 'px-4' : 'px-2']"
       >
         <span class="material-symbols-rounded"> category </span>
-        หมวดหมู่
+        <span
+          class="transition-all duration-300"
+          [ngClass]="
+            isNavExpanded ? 'visible opacity-100' : 'invisible opacity-0'
+          "
+          >หมวดหมู่</span
+        >
       </button>
       <button
         [routerLink]="['/', 'lessons']"
         [routerLinkActive]="'bg-zinc-200'"
-        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+        class="py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4 whitespace-nowrap transition-all duration-300"
+        [ngClass]="[isNavExpanded ? 'px-4' : 'px-2']"
       >
         <span class="material-symbols-rounded"> article </span>
-        บทเรียน
+        <span
+          class="transition-all duration-300"
+          [ngClass]="
+            isNavExpanded ? 'visible opacity-100' : 'invisible opacity-0'
+          "
+          >บทเรียน</span
+        >
       </button>
       <button
         [routerLink]="['/', 'images']"
         [routerLinkActive]="'bg-zinc-200'"
-        class="px-4 py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4"
+        class="py-2 rounded-xl font-semibold hover:bg-zinc-300 flex items-center gap-4 whitespace-nowrap transition-all duration-300"
+        [ngClass]="[isNavExpanded ? 'px-4' : 'px-2']"
       >
         <span class="material-symbols-rounded"> photo </span>
-        รูปภาพ
+        <span
+          class="transition-all duration-300"
+          [ngClass]="
+            isNavExpanded ? 'visible opacity-100' : 'invisible opacity-0'
+          "
+          >รูปภาพ</span
+        >
       </button>
     </nav>
+  </div>
+  <div>
+    <button
+      (click)="toggleExpand()"
+      class="p-2 ps-1.5 pe-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-500 flex items-center transition-all duration-300"
+      [ngClass]="{ 'rotate-180': !isNavExpanded }"
+    >
+      <span class="material-symbols-rounded"> arrow_back_ios_new </span>
+    </button>
   </div>
 </div>

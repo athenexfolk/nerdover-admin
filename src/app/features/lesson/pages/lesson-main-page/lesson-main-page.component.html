@@ -25,7 +25,7 @@
         >
           <span class="hidden md:block">{{ lwc.lesson.key }}</span>
           <img
-            [src]="'/upload/' + lwc.lesson.cover"
+            [src]="lwc.lesson.cover ? '/upload/' + lwc.lesson.cover : 'assets/default.png'"
             class="size-20 object-cover hidden lg:block"
           />
           <div class="col-span-2">
