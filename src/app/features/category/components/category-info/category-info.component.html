@@ -19,11 +19,11 @@
       </div>
       <div>
         <span class="font-semibold">สร้างเมื่อ </span> 
-        <span>{{ category.createTime }}</span>
+        <span>{{ category.createTime | date }}</span>
       </div>
       <div>
         <span class="font-semibold">อัปเดตเมื่อ </span> 
-        <span>{{ category.updateTime }}</span>
+        <span>{{ category.updateTime | date }}</span>
       </div>
     </div>
     <div class="flex justify-end gap-4">

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageRepositoryService } from '../../../../core/repositories/image.repository.service';
 import { Image } from '../../../../core/models/image';
 import { CommonModule } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
+import { ImageService } from '../../../../core/services/image.service';
 
 @Component({
   selector: 'app-image-main-page',
@@ -17,16 +17,17 @@ export class ImageMainPageComponent implements OnInit {
   isImagePanelOpen = false;
   currentFocus?: Image;
 
-  constructor(private irs: ImageRepositoryService) {}
+  constructor(private is: ImageService) {}
 
   ngOnInit(): void {
-    this.irs.getAllImages().subscribe((images) => (this.images = images));
+    this.is.images$.subscribe((images) => (this.images = images));
   }
 
   onFileInput(e: Event) {
     let el = e.target as HTMLInputElement;
     if (el.files && el.files.length && el.files[0]) {
       let file = el.files[0];
+      this.is.upload(file).subscribe();
     }
   }
 

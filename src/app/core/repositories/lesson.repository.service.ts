@@ -12,8 +12,8 @@ import {
   providedIn: 'root',
 })
 export class LessonRepositoryService {
-  private readonly categoryEndpoint = '/api/lesson/categories/';
-  private readonly lessonEndpoint = '/api/lesson/lessons/';
+  private readonly categoryEndpoint = '/api/lesson/categories';
+  private readonly lessonEndpoint = '/api/lesson/lessons';
 
   constructor(private http: HttpClient) {}
 
@@ -41,29 +41,60 @@ export class LessonRepositoryService {
     );
   }
 
-  createCategory(createCategory: CreateCategory) {
-    return this.http.post<Category>(`${this.categoryEndpoint}`, createCategory);
+  createCategory({ key, label, cover }: CreateCategory) {
+    let formData = new FormData();
+    formData.append('key', key);
+    formData.append('label', label);
+    if (cover) {
+      formData.append('cover', cover);
+    }
+    return this.http.post<Category>(`${this.categoryEndpoint}`, formData);
   }
 
-  createLesson(createLesson: CreateLesson) {
-    return this.http.post<Lesson>(`${this.lessonEndpoint}`, createLesson);
+  createLesson({ key, label, parentKey, cover }: CreateLesson) {  
+    let formData = new FormData();
+    formData.append('key', key);
+    formData.append('label', label);
+    formData.append('parentKey', parentKey);
+    if (cover) {
+      formData.append('cover', cover);
+    }
+    return this.http.post<Lesson>(`${this.lessonEndpoint}`, formData);
   }
 
-  updateCategory(categoryId: string, updateCategory: UpdateCategory) {
+  updateCategory(categoryId: string, { cover, label }: UpdateCategory) {
+    let formData = new FormData();
+    if (label) {
+      formData.append('label', label);
+    }
+    if (cover) {
+      formData.append('cover', cover);
+    }
     return this.http.patch<Category>(
       `${this.categoryEndpoint}/${categoryId}`,
-      updateCategory
+      formData
     );
   }
 
   updateLesson(
     categoryId: string,
     lessonId: string,
-    updateLesson: UpdateLesson
+    { parentKey, cover, label }: UpdateLesson
   ) {
+    let formData = new FormData();
+    formData.append('parentKey', parentKey);
+    if (label) {
+      formData.append('label', label);
+    }
+    if (cover) {
+      formData.append('cover', cover);
+    }
+
+    console.log(formData);
+    
     return this.http.patch<Lesson>(
       `${this.lessonEndpoint}/${categoryId}/${lessonId}`,
-      updateLesson
+      formData
     );
   }
 

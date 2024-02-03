@@ -71,7 +71,7 @@ export class UpdateLessonComponent {
   }
 
   update() {
-    if (!this.lessonName.value || this.lessonName.value === this.lesson.label) {
+    if (!this.lessonName.value) {
       return;
     }
 

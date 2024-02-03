@@ -13,4 +13,10 @@ export class ImageRepositoryService {
   getAllImages() {
     return this.http.get<Image[]>(`${this.imageEndpoint}`);
   }
+
+  uploadImage(file: File) {
+    let formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Image>(`${this.imageEndpoint}/upload`, formData);
+  }
 }

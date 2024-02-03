@@ -19,11 +19,11 @@
       </div>
       <div>
         <span class="font-semibold">สร้างเมื่อ </span>
-        <span>{{ lesson.createTime }}</span>
+        <span>{{ lesson.createTime | date }}</span>
       </div>
       <div>
         <span class="font-semibold">อัปเดตเมื่อ </span>
-        <span>{{ lesson.updateTime }}</span>
+        <span>{{ lesson.updateTime | date }}</span>
       </div>
       <button
         [routerLink]="['view', lesson.parentKey, lesson.key]"
