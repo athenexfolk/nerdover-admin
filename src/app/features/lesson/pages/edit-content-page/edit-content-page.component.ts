@@ -7,6 +7,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from 'ngx-markdown';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
+import {
+  ToastIcon,
+  ToastService,
+  ToastTypes,
+} from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-edit-content-page',
@@ -22,7 +27,8 @@ export class EditContentPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ls: LessonService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +67,18 @@ export class EditContentPageComponent implements OnInit {
         this.content.content
       )
       .subscribe({
-        next: () =>
+        next: () => {
+          this.toastService.push({
+            title: 'อัปเดตเนื้อหาสำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
+
           this.router.navigate(
             ['/lessons', 'view', this.content.parentKey, this.content.key],
             { replaceUrl: true }
-          ),
+          );
+        },
       });
   }
 }

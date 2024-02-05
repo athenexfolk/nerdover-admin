@@ -3,6 +3,11 @@ import { OverlayComponent } from '../../../../shared/components/utils/overlay/ov
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LessonService } from '../../../../core/services/lesson.service';
+import {
+  ToastTypes,
+  ToastIcon,
+  ToastService,
+} from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-create-category',
@@ -25,7 +30,11 @@ export class CreateCategoryComponent {
   requiredKeyInvalidText = 'โปรดระบุคีย์หมวดหมู่';
   requiredNameInvalidText = 'โปรดระบุชื่อหมวดหมู่';
 
-  constructor(private fb: FormBuilder, private ls: LessonService) {}
+  constructor(
+    private fb: FormBuilder,
+    private ls: LessonService,
+    private toastService: ToastService
+  ) {}
 
   get categoryKey() {
     return this.form.get('categoryKey')!;
@@ -66,6 +75,11 @@ export class CreateCategoryComponent {
       })
       .subscribe({
         next: (category) => {
+          this.toastService.push({
+            title: 'สร้างหมวดหมู่สำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
           this.closePanel();
         },
       });

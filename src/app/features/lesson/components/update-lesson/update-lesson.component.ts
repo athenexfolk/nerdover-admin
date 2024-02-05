@@ -11,6 +11,11 @@ import { OverlayComponent } from '../../../../shared/components/utils/overlay/ov
 import { Lesson } from '../../../../core/models/lesson';
 import { Category } from '../../../../core/models/category';
 import { RouterLink } from '@angular/router';
+import {
+  ToastIcon,
+  ToastService,
+  ToastTypes,
+} from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-update-lesson',
@@ -34,7 +39,11 @@ export class UpdateLessonComponent {
 
   requiredNameInvalidText = 'โปรดระบุชื่อหมวดหมู่';
 
-  constructor(private fb: FormBuilder, private ls: LessonService) {}
+  constructor(
+    private fb: FormBuilder,
+    private ls: LessonService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.lessonName.setValue(this.lesson.label);
@@ -85,6 +94,11 @@ export class UpdateLessonComponent {
       })
       .subscribe({
         next: (lesson) => {
+          this.toastService.push({
+            title: 'อัปเดตบทเรียนสำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
           this.closePanel();
         },
       });

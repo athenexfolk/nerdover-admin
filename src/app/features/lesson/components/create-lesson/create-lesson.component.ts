@@ -5,6 +5,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LessonService } from '../../../../core/services/lesson.service';
 import { Category } from '../../../../core/models/category';
 import { Router } from '@angular/router';
+import {
+  ToastIcon,
+  ToastService,
+  ToastTypes,
+} from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-create-lesson',
@@ -32,7 +37,8 @@ export class CreateLessonComponent {
   constructor(
     private fb: FormBuilder,
     private ls: LessonService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   get lessonKey() {
@@ -85,6 +91,11 @@ export class CreateLessonComponent {
       })
       .subscribe({
         next: (lesson) => {
+          this.toastService.push({
+            title: 'เพิ่มบทเรียนสำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
           this.router.navigate([
             '/lessons',
             'edit',

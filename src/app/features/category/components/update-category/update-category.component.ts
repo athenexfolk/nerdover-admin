@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LessonService } from '../../../../core/services/lesson.service';
 import { Category } from '../../../../core/models/category';
+import { ToastIcon, ToastService, ToastTypes } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-update-category',
@@ -25,7 +26,11 @@ export class UpdateCategoryComponent implements OnInit {
 
   requiredNameInvalidText = 'โปรดระบุชื่อหมวดหมู่';
 
-  constructor(private fb: FormBuilder, private ls: LessonService) {}
+  constructor(
+    private fb: FormBuilder,
+    private ls: LessonService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.categoryName.setValue(this.category.label);
@@ -71,6 +76,11 @@ export class UpdateCategoryComponent implements OnInit {
       })
       .subscribe({
         next: (category) => {
+          this.toastService.push({
+            title: 'อัปเดตหมวดหมู่สำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
           this.closePanel();
         },
       });
