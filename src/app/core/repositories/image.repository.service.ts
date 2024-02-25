@@ -19,4 +19,8 @@ export class ImageRepositoryService {
     formData.append('file', file);
     return this.http.post<Image>(`${this.imageEndpoint}/upload`, formData);
   }
+
+  deleteImage(path: string) {
+    return this.http.delete(`${this.imageEndpoint}/delete/${path}`);
+  }
 }

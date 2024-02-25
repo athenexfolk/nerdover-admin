@@ -30,4 +30,14 @@ export class ImageService {
       })
     );
   }
+
+  delete(path: string) {
+    return this.irs.deleteImage(path).pipe(
+      tap(() => {
+        this._images.next(
+          this._images.value.filter((image) => image.path !== path)
+        );
+      })
+    );
+  }
 }

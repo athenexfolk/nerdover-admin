@@ -3,6 +3,11 @@ import { Image } from '../../../../core/models/image';
 import { CommonModule } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
 import { ImageService } from '../../../../core/services/image.service';
+import {
+  ToastIcon,
+  ToastService,
+  ToastTypes,
+} from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-image-main-page',
@@ -17,7 +22,9 @@ export class ImageMainPageComponent implements OnInit {
   isImagePanelOpen = false;
   currentFocus?: Image;
 
-  constructor(private is: ImageService) {}
+  isDeletePanelOpen = false;
+
+  constructor(private is: ImageService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.is.images$.subscribe((images) => (this.images = images));
@@ -27,7 +34,15 @@ export class ImageMainPageComponent implements OnInit {
     let el = e.target as HTMLInputElement;
     if (el.files && el.files.length && el.files[0]) {
       let file = el.files[0];
-      this.is.upload(file).subscribe();
+      this.is.upload(file).subscribe({
+        next: () => {
+          this.toastService.push({
+            title: 'อัปโหลดรูปสำเร็จ',
+            type: ToastTypes.success,
+            icon: ToastIcon.done,
+          });
+        },
+      });
     }
   }
 
@@ -41,10 +56,39 @@ export class ImageMainPageComponent implements OnInit {
     this.isImagePanelOpen = false;
   }
 
+  openDeletePanel(image: Image) {
+    this.currentFocus = image;
+    this.isDeletePanelOpen = true;
+  }
+
+  closeDeletePanel() {
+    if (!this.isImagePanelOpen) {
+      this.currentFocus = undefined;
+    }
+    this.isDeletePanelOpen = false;
+  }
+
   copyPath() {
     if (!this.currentFocus) {
       return;
     }
     navigator.clipboard.writeText('/upload/' + this.currentFocus.path);
+  }
+
+  deleteImage() {
+    if (!this.currentFocus) {
+      return;
+    }
+
+    this.is.delete(this.currentFocus.path).subscribe({
+      next: () => {
+        this.closeImagePanel();
+        this.toastService.push({
+          title: 'ลบรูปสำเร็จ',
+          type: ToastTypes.success,
+          icon: ToastIcon.done,
+        });
+      },
+    });
   }
 }

@@ -41,16 +41,48 @@
         class="w-full h-full object-contain object-center bg-white/75 backdrop-blur-sm"
       />
       <div class="absolute top-4 right-4 flex items-center gap-4">
-        <button (click)="copyPath()"
+        <button
+          (click)="copyPath()"
           class="flex justify-center items-center p-2 rounded-full hover:bg-zinc-100"
         >
           <span class="material-symbols-rounded"> content_copy </span>
+        </button>
+        <button
+          (click)="openDeletePanel(currentFocus)"
+          class="flex justify-center items-center p-2 rounded-full text-red-600 hover:bg-red-100"
+        >
+          <span class="material-symbols-rounded"> delete </span>
         </button>
         <button
           (click)="closeImagePanel()"
           class="flex justify-center items-center p-2 rounded-full text-red-600 hover:bg-red-100"
         >
           <span class="material-symbols-rounded"> close </span>
+        </button>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container>
+
+<ng-container *ngIf="isDeletePanelOpen && currentFocus">
+  <app-overlay>
+    <div
+      class="p-4 bg-white rounded-xl relative max-w-sm w-full flex flex-col gap-4"
+    >
+      <h3 class="text-xl font-bold">ลบรูปภาพ</h3>
+      <div>ยืนยันที่จะลบรูปภาพหรือไม่</div>
+      <div class="flex justify-end gap-4">
+        <button
+          (click)="closeDeletePanel()"
+          class="px-4 py-2 rounded-lg font-semibold"
+        >
+          ยกเลิก
+        </button>
+        <button
+          (click)="deleteImage()"
+          class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700"
+        >
+          ลบ
         </button>
       </div>
     </div>
