@@ -3,5 +3,9 @@
   class="max-w-screen-md w-full mx-auto p-4 prose prose-zinc"
 >
   <h1>{{ content.label }}</h1>
-  <markdown [data]="content.content" class="prose prose-sm md:prose-base prose-zinc prose-td:align-middle prose-img:mx-auto" katex></markdown>
+  <markdown
+    [data]="content.content"
+    class="prose prose-sm md:prose-base prose-zinc prose-td:align-middle prose-img:mx-auto"
+    katex
+  ></markdown>
 </div>
